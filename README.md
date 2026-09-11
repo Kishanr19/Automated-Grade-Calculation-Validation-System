@@ -1,205 +1,405 @@
-# Peer Evaluation System
+# Automated Grade Calculation & Validation System
 
-**Hackathon Software Engineering Project**
+**Hackathon Project**
 
-A Java application for processing peer-assessment data and calculating individual grade outcomes from group evaluation inputs.
+A Java application designed to automate peer-assessment processing, validate structured evaluation inputs and calculate individual grade outcomes through deterministic grading logic.
 
-Built under hackathon constraints with an emphasis on **modular design, deterministic calculation logic, input validation, testing, debugging, Git-based version control and iterative delivery**.
+Developed within a **5-person hackathon team**, with an emphasis on **modular software design, input validation, 10+ unit tests, debugging, Git/GitHub version control, CI/CD and iterative software delivery**.
 
-## Engineering Overview
+---
 
-The project converts a manual peer-assessment workflow into repeatable application logic.
+## Project Overview
 
-Rather than coupling input handling directly to grade calculations, the implementation was designed around distinct responsibilities for processing assessment data, applying calculation rules and producing results.
+Group assessments can require individual grades to be adjusted according to peer-evaluation data, creating a process that can become repetitive and difficult to apply consistently when handled manually.
+
+This project converts that workflow into repeatable application logic.
+
+The system accepts structured peer-assessment inputs, validates the supplied data, processes individual evaluation values and applies defined calculation rules to generate individual grade outcomes.
+
+Rather than coupling input handling directly to grade calculations, the application separates **validation, processing, calculation and result generation** into distinct responsibilities.
 
 ```text
-Assessment Input
-       │
-       ▼
-Input Processing
-       │
-       ▼
-Validation
-       │
-       ▼
-Grade Calculation Logic
-       │
-       ▼
-Result Generation
+Peer-Assessment Input
+          │
+          ▼
+    Input Validation
+          │
+          ▼
+    Data Processing
+          │
+          ▼
+ Grade Calculation
+          │
+          ▼
+   Result Validation
+          │
+          ▼
+ Individual Outcomes
 ```
 
-This structure was chosen to make the core calculation behaviour easier to **debug, test and extend** as requirements changed during the hackathon.
+This approach was designed to keep the core calculation behaviour **predictable, testable and maintainable** as functionality evolved throughout the hackathon.
 
-## Technical Skills Demonstrated
+---
 
-| Area                          | Implementation                                                                                   |
-| ----------------------------- | ------------------------------------------------------------------------------------------------ |
-| **Application Development**   | Implemented working application functionality in Java                                            |
-| **Algorithmic Design**        | Converted peer-assessment requirements into deterministic grade-calculation logic                |
-| **Data Processing**           | Transformed structured assessment inputs into individual grade outcomes                          |
-| **Validation**                | Checked assessment inputs before applying calculation logic                                      |
-| **Testing**                   | Evaluated calculation behaviour across different input and edge-case scenarios                   |
-| **Debugging**                 | Diagnosed implementation and calculation defects during iterative development                    |
-| **Version Control**           | Used Git and GitHub to manage and integrate code changes                                         |
-| **Collaborative Development** | Integrated functionality within a shared codebase under hackathon time constraints               |
-| **Software Design**           | Separated processing, calculation and output responsibilities to keep functionality maintainable |
+## Engineering Highlights
+
+| Area                        | Implementation                                                                             |
+| --------------------------- | ------------------------------------------------------------------------------------------ |
+| **Application Development** | Built a working Java application for automated assessment processing and grade calculation |
+| **Team Development**        | Developed and integrated functionality within a 5-person hackathon team                    |
+| **Algorithmic Design**      | Translated assessment requirements into deterministic calculation logic                    |
+| **Validation**              | Validated structured inputs before applying grade-processing rules                         |
+| **Unit Testing**            | Developed 10+ unit tests covering calculation behaviour and input scenarios                |
+| **Edge-Case Testing**       | Tested boundary and unexpected inputs to identify failures in calculation logic            |
+| **Debugging**               | Traced failed scenarios to their source, corrected implementation logic and verified fixes |
+| **Version Control**         | Used Git and GitHub to manage, integrate and track source-code changes                     |
+| **CI/CD**                   | Used CI/CD practices to validate integrated changes and maintain a working build           |
+| **Software Design**         | Separated validation, processing, calculation and result-generation responsibilities       |
+| **Iterative Delivery**      | Developed, tested and integrated functionality throughout a time-constrained hackathon     |
+
+---
 
 ## Core Functionality
 
-The system processes peer-assessment information for members of an academic group and applies defined calculation rules to generate individual grade outcomes.
+The application automates the transformation of peer-assessment data into individual grade outcomes.
 
-The core workflow consists of:
+The end-to-end workflow consists of:
 
-1. Receive structured peer-assessment inputs.
-2. Validate the supplied assessment values.
-3. Process evaluation data for each group member.
-4. Apply the grade-calculation rules.
-5. Generate individual grade outcomes.
-6. Verify results against expected behaviour.
+1. Receiving structured peer-assessment inputs.
+2. Validating assessment values before processing.
+3. Processing evaluation data for individual group members.
+4. Applying deterministic grade-calculation rules.
+5. Generating individual grade outcomes.
+6. Validating calculated results against expected behaviour.
 
-The focus was not simply producing a calculation that worked for one example, but implementing logic that could be repeatedly applied to different assessment inputs.
+The objective was not simply to produce a calculation that worked for a single example. The implementation was designed so the same calculation process could be **repeated consistently across different combinations of assessment inputs**.
+
+---
 
 ## Software Design
 
-### Separation of Responsibilities
+### Modular Processing
 
-The implementation separates the major stages of the assessment workflow rather than treating the entire calculation as a single operation.
+The assessment workflow was separated into distinct stages rather than implementing the entire process as one tightly coupled operation.
 
-This makes it easier to:
+```text
+Input
+  │
+  ├── Validation
+  │
+  ├── Processing
+  │
+  ├── Calculation
+  │
+  └── Result Generation
+```
 
-* isolate defects;
-* modify calculation behaviour;
+Separating these responsibilities made it easier to:
+
+* isolate implementation defects;
 * validate inputs independently;
-* test individual stages of the workflow; and
-* extend functionality without rewriting the entire application.
+* modify calculation behaviour;
+* test specific stages of the workflow;
+* debug incorrect outputs; and
+* extend functionality without redesigning the complete application.
 
-### Deterministic Business Logic
+### Deterministic Calculation Logic
 
-Academic assessment rules were translated into explicit application logic.
+Assessment requirements were translated into explicit Java calculation logic.
 
-For a given valid set of inputs, the calculation process is designed to produce a consistent output. This made expected behaviour easier to reason about and test during development.
+For a given valid set of inputs, the application applies the same defined processing rules to produce a consistent result.
 
-### Defensive Input Handling
+This made calculation behaviour easier to **reason about, reproduce and verify through testing**.
 
-User-provided assessment data introduces the possibility of invalid or unexpected values.
+### Defensive Input Validation
 
-Input handling was therefore treated separately from the calculation itself so incorrect data could be identified before affecting grade-processing logic.
+Assessment data originates from user-provided values and therefore cannot automatically be assumed to be valid.
 
-## Testing & Quality
+Validation was incorporated before the main calculation stage so unexpected or invalid values could be identified before affecting downstream grade-processing logic.
 
-Quality was treated as part of implementation rather than only checking whether the final application executed.
+Keeping validation separate from calculation logic also made failures easier to diagnose during testing.
+
+---
+
+## Testing & Quality Engineering
+
+Software quality formed part of the development process rather than being treated as a final check after implementation.
+
+The project included **10+ unit tests** covering the application's calculation behaviour and different assessment scenarios.
 
 Testing focused on:
 
-* expected assessment inputs;
-* different combinations of peer evaluations;
-* boundary and edge cases;
-* incorrect or unexpected values;
-* consistency of calculated outputs; and
-* regression checking following changes.
+* expected peer-assessment inputs;
+* grade-calculation behaviour;
+* different combinations of evaluation values;
+* boundary conditions;
+* edge cases;
+* invalid or unexpected inputs;
+* consistency of calculated results; and
+* regression checking following code changes.
 
-When defects were identified, the affected logic was isolated, corrected and retested against relevant scenarios.
+The development cycle followed a repeatable quality process:
 
-This **test → diagnose → fix → verify** cycle was used throughout development.
+```text
+Implement
+    │
+    ▼
+Unit Test
+    │
+    ▼
+Identify Failure
+    │
+    ▼
+Debug
+    │
+    ▼
+Implement Fix
+    │
+    ▼
+Retest
+    │
+    ▼
+Integrate
+```
 
-## Debugging
+When a test exposed unexpected behaviour, the affected processing or calculation stage was isolated before changes were made.
 
-Debugging focused on tracing incorrect outputs back through the processing and calculation stages.
+The corrected functionality was then retested to verify the fix and reduce the risk of introducing regressions elsewhere in the application.
 
-Instead of modifying calculations until the final value appeared correct, issues were isolated to the relevant part of the workflow and verified against expected behaviour after correction.
+---
 
-This helped maintain predictable behaviour as the implementation evolved.
+## Debugging & Root-Cause Analysis
 
-## Version Control & Collaborative Development
+Debugging focused on identifying the **source of incorrect behaviour**, rather than changing calculations until the final output appeared correct.
 
-**Git and GitHub** were used to manage source-code changes during the hackathon.
+For failed scenarios, the processing path could be traced through:
 
-The development workflow involved:
+**Input → Validation → Processing → Calculation → Output**
+
+This helped determine whether unexpected behaviour originated from input handling, data processing or the underlying calculation logic.
+
+Once identified, implementation changes were tested against the original failing scenario before being integrated.
+
+This **identify → isolate → fix → verify** approach supported more systematic debugging throughout development.
+
+---
+
+## Git & Version Control
+
+**Git and GitHub** were used throughout development to manage source-code changes and support collaborative development within the 5-person team.
+
+The development workflow followed an iterative pattern:
 
 ```text
 Implement
     ↓
 Test
     ↓
-Review / Debug
+Debug
     ↓
 Commit
     ↓
 Integrate
     ↓
-Verify
+Validate
 ```
 
-Using version control provided a shared history of changes and supported integration of functionality developed during the limited hackathon window.
+Version control provided a shared history of implementation changes and allowed functionality to be integrated into the common codebase throughout the hackathon.
+
+Using Git also supported incremental development rather than relying on a single final integration of independently developed functionality.
+
+---
+
+## CI/CD & Integration
+
+CI/CD practices were used alongside version control to support the integration and validation of code changes.
+
+Changes progressed through development and testing before integration, helping maintain a working application as functionality evolved.
+
+```text
+Code Change
+     │
+     ▼
+Local Validation
+     │
+     ▼
+Unit Tests
+     │
+     ▼
+Version Control
+     │
+     ▼
+CI/CD Validation
+     │
+     ▼
+Integration
+```
+
+Combining **Git, automated testing and CI/CD** helped introduce a more structured delivery workflow despite the limited hackathon timeframe.
+
+---
+
+## Collaborative Development
+
+The application was developed within a **5-person hackathon team**.
+
+Working within a shared codebase required functionality to be developed in a way that could be integrated with work produced by other team members.
+
+This involved:
+
+* breaking the overall problem into manageable development tasks;
+* implementing functionality against agreed requirements;
+* managing changes through Git and GitHub;
+* testing functionality before integration;
+* resolving implementation issues as functionality was combined; and
+* maintaining focus on delivery within the hackathon deadline.
+
+The constrained development window required technical decisions to balance **functionality, reliability and delivery speed**.
+
+---
 
 ## Hackathon Delivery
 
-The project was developed within a constrained timeframe, requiring technical scope to be prioritised around delivering working functionality.
+The project progressed from initial requirements to a functioning application within the hackathon timeframe.
 
-The development process involved:
+The overall engineering lifecycle was:
 
-**Requirements → Design → Implementation → Testing → Debugging → Integration → Delivery**
+**Requirements → Design → Implementation → Testing → Debugging → Integration → Validation → Delivery**
 
-This required balancing implementation quality against the limited development window and prioritising functionality necessary for a working end-to-end solution.
+Development therefore involved more than implementing the core calculation algorithm.
+
+The team also had to determine how the requirements should be represented in software, structure the application, validate inputs, test behaviour, resolve defects and integrate functionality into a working final solution.
+
+The limited timeframe encouraged **iterative delivery and prioritisation of core functionality** over unnecessary complexity.
+
+---
 
 ## Engineering Challenges
 
-### Translating Requirements into Software
+### Translating Requirements into Application Logic
 
-The primary challenge was converting a real assessment process into explicit application behaviour.
+The central engineering challenge was converting a human assessment process into explicit and repeatable software behaviour.
 
-Peer evaluations represent human-generated information, while software requires deterministic rules. The project therefore required the assessment requirements to be decomposed into data-processing and calculation steps that could be implemented and tested independently.
+Peer-assessment information represents human-generated evaluation data, while the application requires clearly defined rules.
 
-### Handling Edge Cases
+The problem therefore had to be decomposed into:
 
-Calculation functionality needed to remain predictable across different combinations of assessment inputs.
+**Input → Validation → Processing → Calculation → Output**
 
-Testing multiple scenarios exposed cases that required additional validation or changes to calculation behaviour.
+Breaking the workflow into these stages made individual behaviours easier to implement and test.
 
-### Integrating Changes Under Time Constraints
+### Maintaining Calculation Reliability
 
-Hackathon development required functionality to be implemented and integrated quickly without losing control of the shared codebase.
+Different combinations of peer-assessment values could exercise different parts of the calculation logic.
 
-Git-based version control and iterative testing helped keep changes manageable while the application evolved.
+The application therefore needed to behave predictably beyond a single successful test case.
 
-## Skills Demonstrated
+The **10+ unit tests**, combined with edge-case testing and debugging, were used to verify behaviour across multiple scenarios and identify calculation defects before final delivery.
 
-This project provides practical evidence of:
+### Integrating Development Within a Team
 
-* **Java application development**
-* **Git and GitHub version control**
-* **Software testing and quality assurance**
-* **Debugging and root-cause analysis**
-* **Algorithmic problem-solving**
-* **Input validation**
-* **Modular software design**
-* **Requirements-to-code translation**
-* **Collaborative development**
-* **Iterative software delivery**
-* **Edge-case handling**
-* **Technical decision-making**
+Hackathon development required multiple contributors to work against a shared deadline.
+
+Git/GitHub version control, testing and CI/CD practices helped structure how changes were integrated and validated while the application continued to evolve.
+
+---
+
+## Technical Skills Demonstrated
+
+The project provides practical evidence across several areas of software engineering:
+
+### Software Development
+
+* Java application development
+* Modular software design
+* Algorithmic problem-solving
+* Requirements-to-code translation
+* Data processing
+* Deterministic business logic
+
+### Software Quality
+
+* 10+ unit tests
+* Input validation
+* Edge-case testing
+* Regression checking
+* Debugging
+* Root-cause analysis
+* Defect verification
+
+### Development & Delivery
+
+* Git
+* GitHub
+* Version control
+* CI/CD
+* Code integration
+* Iterative development
+
+### Engineering Collaboration
+
+* 5-person development team
+* Shared codebase development
+* Technical problem-solving
+* Integration of functionality
+* Deadline-driven software delivery
+
+---
+
+## Technology Stack
+
+| Technology / Practice | Purpose                                              |
+| --------------------- | ---------------------------------------------------- |
+| **Java**              | Core application and calculation logic               |
+| **Git**               | Source-code version control                          |
+| **GitHub**            | Repository and collaborative code management         |
+| **Unit Testing**      | Verification of calculation and validation behaviour |
+| **CI/CD**             | Validation and integration of application changes    |
+
+---
 
 ## Production Evolution
 
-The hackathon implementation deliberately prioritised core functionality. If developed further towards a production-style service, the next engineering steps would include:
+The hackathon implementation prioritised delivery of the core calculation and validation workflow.
 
-* automated unit and integration test suites;
-* persistent relational storage;
-* REST API endpoints separating client and calculation services;
-* stronger validation and structured error handling;
-* automated CI/CD checks;
+If the application were developed further towards a production service, potential engineering improvements would include:
+
+* expanding automated unit and integration test coverage;
+* persistent relational data storage;
+* REST API endpoints separating clients from calculation services;
+* structured exception and error handling;
+* automated CI/CD quality gates;
 * containerised execution;
-* application logging and monitoring;
+* structured application logging;
+* production monitoring and observability;
 * authentication and role-based access control;
 * configuration-driven grading rules; and
-* deployment to a managed cloud environment.
+* deployment to managed cloud infrastructure.
 
-These are **future engineering improvements**, rather than capabilities claimed by the current implementation.
+These represent **future production-engineering improvements and are not claimed as functionality of the current implementation**.
+
+---
+
+## Key Outcomes
+
+* Delivered a working **end-to-end Java application** within the hackathon deadline.
+* Developed the solution collaboratively within a **5-person team**.
+* Automated peer-assessment processing and individual grade calculation.
+* Implemented validation around structured assessment inputs.
+* Developed **10+ unit tests** covering calculation and input scenarios.
+* Debugged calculation failures and edge cases before final delivery.
+* Used **Git and GitHub version control** throughout development.
+* Applied **CI/CD practices** to support integration and validation.
+* Maintained a modular structure designed around testable application responsibilities.
+
+---
 
 ## Repository
 
 **Source Code:**
 `github.com/Kishanr19/-Peer-Evaluation-System-for-Academic-Group-Assessment`
+
+---
 
 ## Author
 
